@@ -23,11 +23,12 @@ def say_hello():
         </head>
         <body>
             <h1>Hi There!</h1>
+
+            <br>
+
             <form action="/greet" method="POST">
                 <label>What's your name? <input type="text" name="person"></label>
-                <input type="submit">
-                <br>
-                <br>
+                <br><br>
                 <label>Please select a compliment:
                 <select name="compliment-type">
                     <option value="awesome">Awesome</option>
@@ -35,7 +36,23 @@ def say_hello():
                     <option value="fly">Fly</option>
                     <option value="coolio">Coolio</option>
                     <option value="bitchin">Bitchin</option> <!-- does not update with debug=False -->
-                </select></label>
+                </select></label><br><br>
+                <input type="submit" value="Compliment Me!">
+            </form>
+            <br><br><br>
+            
+            <form action="/diss" method="POST">
+                <label>What's your name? <input type="text" name="person"></label>
+                <br><br>
+                <label>Please select a diss:
+                <select name="diss-type">
+                    <option value="a buttface">A Buttface</option>
+                    <option value="not fantabulous">Not Fantabulous</option>
+                    <option value="smelly">Smelly</option>
+                    <option value="a disease">A Disease</option>
+                    <option value="smelly in spirit">Smelly, in Spirit</option> <!-- does not update with debug=False -->
+                </select></label><br><br>
+                <input type="submit" value="Diss Me!">
             </form>
         </body>
     </html>
@@ -64,6 +81,20 @@ def greet_person():
         </body>
     </html>""" % (player, compliment)
 
+@app.route('/diss', methods=["POST"])
+def diss_person():
+    player = request.form.get("person")
+    diss = request.form.get("diss-type")
+    return """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>A Diss</title>
+    </head>
+    <body>
+        Hi {}, I think you're {}!
+    </body>
+    </html""".format(player, diss)
 
 if __name__ == '__main__':
     # debug=True gives us error messages in the browser and also "reloads" our web app
